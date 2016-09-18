@@ -3,7 +3,6 @@ package br.senai.sp.informatica.todolist.controller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class ListaRestController {
 	
 	@Transactional
 	@RequestMapping(value="/lista", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE) 
-	public ResponseEntity<String> inserir(@RequestBody String strLista) {
+	public ResponseEntity<Lista> inserir(@RequestBody String strLista) {
 
 		//Criação das referências que serão utilizadas durante a tentativa de salvar a lista no BD
 		Lista lista = new Lista();
@@ -49,13 +48,9 @@ public class ListaRestController {
 			lista.setItens(itens);
 			dao.inserir(lista);
 
-			//transforma o corpo da resposta em um JSON
-			ObjectMapper mapper = new ObjectMapper();
-			String listaPersistida = mapper.writeValueAsString(lista);
-
 			//preparando a resposta nos padrões de URI RESTful
 			URI location = new URI("/todo/"+lista.getId());
-			return ResponseEntity.created(location).body(listaPersistida);
+			return ResponseEntity.created(location).body(lista);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
