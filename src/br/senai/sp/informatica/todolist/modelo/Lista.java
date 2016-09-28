@@ -1,13 +1,8 @@
 package br.senai.sp.informatica.todolist.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Lista {
@@ -19,7 +14,7 @@ public class Lista {
 	@Column(length = 100, nullable = false)
 	private String titulo;
 
-	@OneToMany(mappedBy="lista", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="lista", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemLista> itens;
 	
 	public Long getId() {
@@ -40,9 +35,11 @@ public class Lista {
 	public void setItens(List<ItemLista> itens) {
 		this.itens = itens;
 	}
+
+	@JsonProperty(value = "feito")
 	public boolean isRealizada() {
-		for(ItemLista item : itens){
-			if(!item.isFeito()){
+		for(ItemLista item : itens) {
+			if(!item.isFeito()) {
 				return false;
 			}
 		}
