@@ -27,14 +27,14 @@ public class ListaDAO {
 	}
 
 	@Transactional
-	public void excluir(Long idLista){
+	public void excluir(Long idLista) {
 		//busca uma entrada no banco através de sua chave primária
 		Lista lista = manager.find(Lista.class, idLista);
 		manager.remove(lista);
 	}
 
 	@Transactional
-	public void excluirItem(Long idItem){
+	public void excluirItem(Long idItem) {
 		ItemLista item = manager.find(ItemLista.class, idItem);
 		Lista lista = item.getLista();
 		lista.getItens().remove(item);
@@ -42,7 +42,7 @@ public class ListaDAO {
 	}
 
 	@Transactional
-	public Lista buscaListaPorID(Long idLista){
+	public Lista buscaListaPorID(Long idLista) {
 		return manager.find(Lista.class, idLista);
 	}
 }

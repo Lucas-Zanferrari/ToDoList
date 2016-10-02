@@ -32,7 +32,7 @@ public class ListaRestController {
 			lista.setTitulo(jsonObj.getString("titulo"));
 			JSONArray jsonItens = jsonObj.getJSONArray("itens");
 			
-			for(int i=0; i<jsonItens.length(); i++){
+			for(int i=0; i<jsonItens.length(); i++) {
 				ItemLista item = new ItemLista();
 				item.setDescricao(jsonItens.getString(i));
 				item.setLista(lista);
@@ -54,24 +54,24 @@ public class ListaRestController {
 	}
 
 	@RequestMapping(value = "/lista", method=RequestMethod.GET)
-	public List<Lista> listar(){
+	public List<Lista> listar() {
 		return dao.listar();
 	}
 
 	@RequestMapping(value = "/lista/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> excluir(@PathVariable("id") Long idLista){
+	public ResponseEntity<Void> excluir(@PathVariable("id") Long idLista) {
 		dao.excluir(idLista);
 		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "/item/{idItem}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> excluirItem(@PathVariable Long idItem){
+	public ResponseEntity<Void> excluirItem(@PathVariable Long idItem) {
 		dao.excluirItem(idItem);
 		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "/lista/{idLista}", method = RequestMethod.GET)
-	public Lista buscarListaPorID(@PathVariable Long idLista){
+	public Lista buscarListaPorID(@PathVariable Long idLista) {
 		Lista lista = dao.buscaListaPorID(idLista);
 		return lista;
 	}
